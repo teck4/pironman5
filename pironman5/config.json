@@ -8,6 +8,7 @@
         "rgb_led_count": 4,
         "temperature_unit": "C",
         "oled_enable": true,
+        "oled_brightness": 100,
         "oled_rotation": 0,
         "oled_disk": "total",
         "oled_network_interface": "all",
