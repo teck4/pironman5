@@ -52,6 +52,7 @@ def main():
         parser.add_argument("-fp", "--gpio-fan-led-pin", nargs='?', default='', help="GPIO fan LED pin")
     if is_included(PERIPHERALS, "oled"):
         parser.add_argument("-oe", "--oled-enable", nargs='?', default='', help="OLED enable True/true/on/On/1 or False/false/off/Off/0")
+        parser.add_argument("-ob", "--oled-brightness", nargs='?', default='', help="OLED brightness 0-100")
         parser.add_argument("-od", "--oled-disk", nargs='?', default='', help="Set to display which disk on OLED. 'total' or the name of the disk, like mmbclk or nvme")
         parser.add_argument("-oi", "--oled-network-interface", nargs='?', default='', help="Set to display which ip of network interface on OLED, 'all' or the interface name, like eth0 or wlan0")
         parser.add_argument("-or", "--oled-rotation", nargs='?', default=-1, type=int, choices=[0, 180], help="Set to rotate OLED display, 0, 180")
@@ -272,6 +273,19 @@ def main():
                 else:
                     print(f"Invalid value for OLED enable, it should be {', '.join(TRUE_LIST)} or {', '.join(FALSE_LIST)}")
                     quit()
+        if args.oled_brightness != '':
+            if args.oled_brightness == None:
+                print(f"OLED brightness: {current_config['auto']['oled_brightness']}")
+            else:
+                try:
+                    args.oled_brightness = int(args.oled_brightness)
+                except ValueError:
+                    print(f"Invalid value for OLED brightness, it should be an integer between 0 and 100")
+                    quit()
+                if args.oled_brightness < 0 or args.oled_brightness > 100:
+                    print(f"Invalid value for OLED brightness, it should be between 0 and 100")
+                    quit()
+                new_auto['oled_brightness'] = args.oled_brightness
         if args.oled_disk != '':
             from sf_rpi_status import get_disks
             disks = ['total']
