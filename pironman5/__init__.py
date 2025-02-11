@@ -285,7 +285,7 @@ def main():
                 if args.oled_brightness < 0 or args.oled_brightness > 100:
                     print(f"Invalid value for OLED brightness, it should be between 0 and 100")
                     quit()
-                new_auto['oled_brightness'] = args.oled_brightness
+                new_sys_config['oled_brightness'] = args.oled_brightness
         if args.oled_disk != '':
             from sf_rpi_status import get_disks
             disks = ['total']
